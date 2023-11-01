@@ -45,6 +45,19 @@ namespace FarmersMarketApp_RestAPI.Controllers
             return response;
         }
 
+        [HttpGet]
+        [Route("GetProductByName/{name}")]
+        public Response GetProductByName(string name)
+        {
+            Response response = new Response();
+
+            NpgsqlConnection con = new NpgsqlConnection(_configuration.GetConnectionString("productConnection"));
+
+            DBApplication dbA = new DBApplication();
+            response = dbA.GetProductByName(con, name);
+            return response;
+        }
+
         [HttpPost]
         [Route("AddProduct")]
 
@@ -70,6 +83,20 @@ namespace FarmersMarketApp_RestAPI.Controllers
 
             DBApplication dbA = new DBApplication();
             response = dbA.UpdateProduct(con, product);
+            return response;
+        }
+
+        [HttpPut]
+        [Route("UpdateProductByName")]
+
+        public Response PutProductByName(Product product)
+        {
+            Response response = new Response();
+
+            NpgsqlConnection con = new NpgsqlConnection(_configuration.GetConnectionString("productConnection"));
+
+            DBApplication dbA = new DBApplication();
+            response = dbA.UpdateProductByName(con, product);
             return response;
         }
 
